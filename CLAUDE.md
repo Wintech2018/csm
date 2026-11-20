@@ -38,8 +38,8 @@ npm run lint      类型检查（tsc --noEmit）
 ## 工作方式
 
 - 先写或更新测试，再写实现。规格第 12 节的自动化测试用 `fixtures/gateway.drawio` 作输入，期望值写在规格第 11 节。
-- 每完成第 14 节表里的一个时段，就提交一次并确认 `npm test` 与 `npm run build` 都通过，然后推送，触发部署。
-- 第一件事是把空壳页面部署上线（规格第 13 节）。
+- 每完成第 14 节表里的一个时段，就提交一次并确认 `npm test` 与 `npm run build` 都通过，然后推送到 `main`，由 Cloudflare Pages 自动构建部署（构建命令里先跑测试）。
+- 第一件事是把空壳页面部署到 Cloudflare Pages（规格第 13 节）。
 - 遇到规格没覆盖的 draw.io 写法：先让它进未使用清单，并在 `docs/open-questions.md` 里记一条，不要临时发明新规则。
 - ELK 嵌套布局调了 2 小时还不行，就停下，只保留原图布局，在 `docs/open-questions.md` 记下卡在哪里。
 

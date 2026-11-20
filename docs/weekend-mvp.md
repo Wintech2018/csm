@@ -22,7 +22,7 @@
 | 状态 | candidate、accepted、rejected | 其他状态维度 |
 | 历史 | 追加式编辑日志，面板里按顺序列出 | Change-set 事务、Revision、并发控制 |
 | 存储 | localStorage 自动保存；导出、导入 `.csm.json` | 后端、数据库、多项目管理 |
-| 部署 | Vite 构建，GitHub Pages 静态部署 | 后端、认证、租户 |
+| 部署 | Vite 构建，Cloudflare Pages 静态部署 | 后端、认证、租户 |
 
 ## 3. 技术栈
 
@@ -259,9 +259,11 @@ UI 在拒绝有子系统的 System 前弹确认框，显示连带数量。
 
 ## 13. 部署
 
-- `vite.config.ts` 设 `base: './'`，适配 GitHub Pages 的子路径。
-- `.github/workflows/deploy.yml`：push 到 `main` 时运行 `npm ci && npm test && npm run build`，用 `actions/upload-pages-artifact` 和 `actions/deploy-pages` 发布 `dist/`。
-- 仓库 Settings → Pages → Source 选 GitHub Actions。免费账户的私有仓库不能用 Pages；如需私有，改用 Cloudflare Pages 或 Netlify，构建命令相同。
+- 托管用 Cloudflare Pages 的 Git 集成：Cloudflare 拉取 GitHub 仓库并在它那边构建，仓库可以是私有的，不需要 GitHub Actions 工作流，也不需要在 GitHub 里存 API token。
+- Cloudflare Pages 项目设置：生产分支 `main`；框架预设 None；构建命令 `npm test && npm run build`（先跑测试，测试失败则不发布）；输出目录 `dist`；根目录留空。Cloudflare 检测到 `package-lock.json` 会先自动安装依赖。
+- Node 版本由仓库根目录的 `.node-version` 指定。
+- `vite.config.ts` 保留 `base: './'`：资源用相对路径，在 Cloudflare 的根路径和本地 `vite preview` 下都能用。
+- 推送到 `main` 部署生产地址 `https://<项目名>.pages.dev`；推送到其他分支会生成预览地址。
 - **第一步就把空壳部署上线**，部署问题在周六上午解决，不留到最后。
 
 ## 14. 建议顺序
