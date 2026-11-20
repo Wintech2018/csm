@@ -1,0 +1,112 @@
+<mxfile host="Electron" type="device">
+  <diagram id="gateway-page-1" name="Gateway">
+    <mxGraphModel dx="1200" dy="800" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1200" pageHeight="700" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+
+        <!-- 装饰：标题（text 样式）与图例（关键词 Legend） -->
+        <mxCell id="title" value="Gateway 架构图（合成测试数据）" style="text;html=1;fontSize=18;fontStyle=1;align=left;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="40" y="10" width="400" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="legend" value="Legend&lt;br&gt;实线：数据&lt;br&gt;虚线：供电" style="rounded=0;whiteSpace=wrap;html=1;align=left;" vertex="1" parent="1">
+          <mxGeometry x="960" y="40" width="180" height="80" as="geometry" />
+        </mxCell>
+
+        <!-- L0：Gateway 容器 -->
+        <mxCell id="gw" value="Gateway" style="rounded=0;whiteSpace=wrap;html=1;container=1;collapsible=0;verticalAlign=top;fillColor=#f5f5f5;" vertex="1" parent="1">
+          <mxGeometry x="40" y="60" width="820" height="560" as="geometry" />
+        </mxCell>
+
+        <!-- L1/L2：Acquisition -->
+        <mxCell id="acq" value="Acquisition" style="rounded=0;whiteSpace=wrap;html=1;container=1;collapsible=0;verticalAlign=top;fillColor=#dae8fc;" vertex="1" parent="gw">
+          <mxGeometry x="20" y="40" width="240" height="220" as="geometry" />
+        </mxCell>
+        <mxCell id="sensor" value="Sensor IF" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="acq">
+          <mxGeometry x="20" y="40" width="200" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="adc" value="ADC" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="acq">
+          <mxGeometry x="20" y="130" width="200" height="50" as="geometry" />
+        </mxCell>
+
+        <!-- L1/L2：Processing -->
+        <mxCell id="proc" value="Processing" style="rounded=0;whiteSpace=wrap;html=1;container=1;collapsible=0;verticalAlign=top;fillColor=#d5e8d4;" vertex="1" parent="gw">
+          <mxGeometry x="290" y="40" width="240" height="220" as="geometry" />
+        </mxCell>
+        <mxCell id="mcu" value="Main MCU" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="proc">
+          <mxGeometry x="20" y="40" width="200" height="60" as="geometry" />
+        </mxCell>
+
+        <!-- L1/L2：Connectivity（含别名考点 WLAN Module） -->
+        <mxCell id="conn" value="Connectivity" style="rounded=0;whiteSpace=wrap;html=1;container=1;collapsible=0;verticalAlign=top;fillColor=#fff2cc;" vertex="1" parent="gw">
+          <mxGeometry x="560" y="40" width="240" height="300" as="geometry" />
+        </mxCell>
+        <mxCell id="wifi" value="Wi-Fi" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="conn">
+          <mxGeometry x="20" y="40" width="200" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="wlan" value="WLAN Module" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="conn">
+          <mxGeometry x="20" y="120" width="200" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="lte" value="LTE" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="conn">
+          <mxGeometry x="20" y="200" width="200" height="50" as="geometry" />
+        </mxCell>
+
+        <!-- L1/L2：Power Management -->
+        <mxCell id="pwr" value="Power Management" style="rounded=0;whiteSpace=wrap;html=1;container=1;collapsible=0;verticalAlign=top;fillColor=#f8cecc;" vertex="1" parent="gw">
+          <mxGeometry x="20" y="300" width="510" height="200" as="geometry" />
+        </mxCell>
+        <mxCell id="pmic" value="PMIC" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="pwr">
+          <mxGeometry x="20" y="40" width="200" height="60" as="geometry" />
+        </mxCell>
+
+        <!-- 几何包含考点：Battery 结构上挂在根图层，但画在 Power Management 内部（绝对坐标） -->
+        <mxCell id="battery" value="Battery" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="300" y="400" width="200" height="60" as="geometry" />
+        </mxCell>
+
+        <!-- 外部系统 -->
+        <mxCell id="extnet" value="External Network" style="ellipse;shape=cloud;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="960" y="200" width="160" height="80" as="geometry" />
+        </mxCell>
+
+        <!-- 归属不明考点：跨在 Gateway 右下边界上 -->
+        <mxCell id="dbg" value="Debug Connector" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="780" y="590" width="140" height="50" as="geometry" />
+        </mxCell>
+
+        <!-- 连线 -->
+        <mxCell id="e1" value="SPI" style="endArrow=none;html=1;" edge="1" parent="1" source="adc" target="mcu">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e2" value="SDIO" style="endArrow=none;html=1;" edge="1" parent="1" source="mcu" target="wifi">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <!-- 重复连线考点：同一对系统之间无标签的第二条线 -->
+        <mxCell id="e3" value="" style="endArrow=none;html=1;" edge="1" parent="1" source="mcu" target="wifi">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <!-- 标签作为子图元（edgeLabel）的写法 -->
+        <mxCell id="e4" value="" style="dashed=1;html=1;" edge="1" parent="1" source="pmic" target="wifi">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e4-label" value="VDD 3V3" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="e4">
+          <mxGeometry x="-0.2" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e5" value="VBAT" style="dashed=1;html=1;" edge="1" parent="1" source="pmic" target="lte">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e6" value="Uplink" style="html=1;" edge="1" parent="1" source="conn" target="extnet">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <!-- 悬空连线考点：只接了 PMIC 一端 -->
+        <mxCell id="e7" value="PG" style="html=1;" edge="1" parent="1" source="pmic">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="560" y="660" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
